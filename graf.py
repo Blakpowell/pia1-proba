@@ -29,6 +29,7 @@ tasas = list(tab_medias)
 x = np.arange(len(labels))
 width = 0.9
 
+# A partir de aqui, se comienza a modelar el histograma.
 fig, ax = plt.subplots()
 rects = ax.bar(x, tasas, width)
 
