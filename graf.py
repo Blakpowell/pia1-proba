@@ -32,7 +32,8 @@ width = 0.9
 fig, ax = plt.subplots()
 rects = ax.bar(x, tasas, width)
 
-ax.set_ylabel('Repeticiones')
+ax.set_title('Conteo de las medias en clases')
+ax.set_ylabel('Cantidad')
 ax.set_xticks(x)
 ax.set_xticklabels(labels, rotation=30)
 ax.bar_label(rects, padding=1)
