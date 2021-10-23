@@ -1,5 +1,4 @@
 # PIA_1 - Probabilidad Avanzada
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,31 +11,35 @@ b.index = range(1, 21)
 
 # b.mean() # tiene las medias
 r = b.mean()
+tabla = pd.Series(r)
 
-i = r.min()
-dist = 1
-ff = {'[{0} - {1})'.format(int(i), int(i+dist)): r[r>=np.floor(i)][r<np.floor(i+dist)].count()}
-while (i < r.max()):
-	ff.update({'[{0} - {1})'.format(int(i), int(i+dist)): r[r>=np.floor(i)][r<np.floor(i+dist)].count()})
-	i = i + dist
+def contar(dist = 1):
+	global tabla
+	i = r.min()
+	clases = {}
+	while i < r.max():
+		clases.update({'[{0} - {1})'.format(int(i), int(i+dist)): r[r>=np.floor(i)][r<np.floor(i+dist)].count()})
+		i = i + dist
+	tabla = pd.Series(clases)
+	
+def plot_hist():
+	global tabla
+	labels = tabla.index
+	tasas = list(tabla)
+	x = np.arange(len(labels))
+	width = 0.9
+	
+	fig, ax = plt.subplots()
+	rects = ax.bar(x, tasas, width)
+	ax.set_title('Conteo de las medias en clases')
+	ax.set_ylabel('Cantidad')
+	ax.set_xticks(x)
+	ax.set_xticklabels(labels, rotation=30)
+	ax.bar_label(rects, padding=1)
+	
+	plt.show()
 
-tab_medias = pd.Series(ff)
-print(tab_medias)
-
-labels = tab_medias.index
-tasas = list(tab_medias)
-
-x = np.arange(len(labels))
-width = 0.9
-
-# A partir de aqui, se comienza a modelar el histograma.
-fig, ax = plt.subplots()
-rects = ax.bar(x, tasas, width)
-
-ax.set_title('Conteo de las medias en clases')
-ax.set_ylabel('Cantidad')
-ax.set_xticks(x)
-ax.set_xticklabels(labels, rotation=30)
-ax.bar_label(rects, padding=1)
-
-plt.show()
+if __name__ == '__main__':
+	contar()
+	print(tabla)
+	plot_hist()
