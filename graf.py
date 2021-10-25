@@ -17,7 +17,7 @@ def contar(dist = 1):
 	global tabla
 	i = r.min()
 	clases = {}
-	while i < r.max():
+	while i < r.max() + dist:
 		clases.update({'[{0} - {1})'.format(int(i), int(i+dist)): r[r>=np.floor(i)][r<np.floor(i+dist)].count()})
 		i = i + dist
 	tabla = pd.Series(clases)
@@ -30,9 +30,9 @@ def plot_hist():
 	width = 0.9
 	
 	fig, ax = plt.subplots()
-	rects = ax.bar(x, tasas, width)
+	rects = ax.bar(x, tasas, width, color='#9335F6')
 	ax.set_title('Conteo de las medias en clases')
-	ax.set_ylabel('Cantidad')
+	ax.set_ylabel('Frecuencia')
 	ax.set_xticks(x)
 	ax.set_xticklabels(labels, rotation=30)
 	ax.bar_label(rects, padding=1)
